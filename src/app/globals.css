@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+@theme {
+  /* Paleta Verde Esmeralda / Bosque - Despacho VATC CRM */
+  --color-primary: #065f46;
+  --color-primary-container: #059669;
+  --color-primary-hover: #064e3b;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #ecfdf5;
+
+  --color-secondary: #2d5a4c;
+  --color-secondary-container: #d1fae5;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #064e3b;
+
+  --color-tertiary: #0d9488;
+  --color-tertiary-container: #ccfbf1;
+
+  --color-background: #f6fbf8;
+  --color-surface: #ffffff;
+  --color-surface-container: #ebf5ef;
+  --color-surface-container-lowest: #ffffff;
+  --color-on-surface: #0b241c;
+  --color-on-surface-variant: #3b5a4f;
+
+  --color-outline: #5f8275;
+  --color-outline-variant: #cfe3da;
+
+  --color-error: #b91c1c;
+  --color-error-container: #fee2e2;
+
+  /* Typography */
+  --font-inter: var(--font-inter-next), "Inter", system-ui, -apple-system, sans-serif;
+}
+
+:root {
+  --background: #f6fbf8;
+  --foreground: #0b241c;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter);
+}
+
+.input-green {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-outline-variant);
+  background: var(--color-background);
+  font-size: 0.75rem;
+  color: var(--color-on-surface);
+  transition: all 0.15s ease;
+}
+
+.input-green:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+}
+
+/* Custom Scrollbar Styles (Emerald Green tone) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #a7f3d0;
+  border-radius: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #065f46;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
