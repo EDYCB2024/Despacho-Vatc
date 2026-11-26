@@ -68,8 +68,14 @@ export async function POST(request: Request) {
     return response;
   } catch (err) {
     console.error("Login error:", err);
+    const detail =
+      err instanceof Error ? err.message : "Error desconocido";
     return NextResponse.json(
-      { error: "Error al iniciar sesión." },
+      {
+        error: detail.includes("DATABASE_URL")
+          ? "Falta configurar DATABASE_URL en las variables de entorno (Vercel / .env.local)."
+          : `Error al iniciar sesión (${detail}).`,
+      },
       { status: 500 }
     );
   }
