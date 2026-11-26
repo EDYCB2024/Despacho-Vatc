@@ -104,11 +104,11 @@ export default function RecepcionDespachoPage() {
         user={user}
       />
 
-      <main className="p-4 sm:p-6 space-y-5 max-w-[1600px] mx-auto w-full">
+      <main className="p-3 sm:p-6 space-y-4 sm:space-y-5 max-w-[1600px] mx-auto w-full">
         {/* Toolbar */}
-        <section className="bg-white border border-outline-variant rounded-2xl p-4 shadow-sm space-y-3">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="relative flex-1 min-w-[240px] max-w-md">
+        <section className="bg-white border border-outline-variant rounded-2xl p-3.5 sm:p-4 shadow-sm space-y-3">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center justify-between gap-2.5 sm:gap-3">
+            <div className="relative flex-1 w-full sm:min-w-[240px] sm:max-w-md">
               <Search className="w-4 h-4 text-outline absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 value={search}
@@ -118,10 +118,10 @@ export default function RecepcionDespachoPage() {
               />
             </div>
 
-            <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
               <button
                 onClick={fetchReceptions}
-                className="p-2.5 rounded-xl border border-outline-variant bg-white hover:bg-secondary-container text-primary transition-colors cursor-pointer"
+                className="p-2.5 rounded-xl border border-outline-variant bg-white hover:bg-secondary-container text-primary transition-colors cursor-pointer shrink-0"
                 title="Recargar"
               >
                 <RefreshCw className={cn("w-4 h-4", loading && "animate-spin")} />
@@ -130,59 +130,66 @@ export default function RecepcionDespachoPage() {
               <button
                 onClick={handleExportExcel}
                 disabled={exporting}
-                className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl border border-outline-variant bg-white hover:bg-secondary-container text-primary text-xs font-bold transition-colors cursor-pointer disabled:opacity-50"
+                className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl border border-outline-variant bg-white hover:bg-secondary-container text-primary text-xs font-bold transition-colors cursor-pointer disabled:opacity-50"
               >
-                <Download className="w-4 h-4" />
-                <span>{exporting ? "Exportando..." : "Exportar Excel"}</span>
+                <Download className="w-4 h-4 shrink-0" />
+                <span>{exporting ? "Exportando..." : "Excel"}</span>
               </button>
 
               <button
                 onClick={() => setShowNew(true)}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary hover:bg-primary-container text-white text-xs font-bold shadow-md shadow-primary/20 transition-all cursor-pointer"
+                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-primary hover:bg-primary-container text-white text-xs font-bold shadow-md shadow-primary/20 transition-all cursor-pointer"
               >
-                <Plus className="w-4 h-4" />
+                <Plus className="w-4 h-4 shrink-0" />
                 <span>Registrar Recepción</span>
               </button>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-outline-variant/60">
-            <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-on-surface-variant mr-1">
-              <Filter className="w-3.5 h-3.5 text-primary" />
-              <span>Filtros:</span>
+          <div className="grid grid-cols-1 sm:flex sm:flex-wrap items-center gap-2 pt-2.5 border-t border-outline-variant/60">
+            <div className="flex items-center justify-between sm:justify-start gap-1.5 text-[11px] font-bold uppercase tracking-wider text-on-surface-variant sm:mr-1">
+              <span className="inline-flex items-center gap-1.5">
+                <Filter className="w-3.5 h-3.5 text-primary" />
+                <span>Filtros:</span>
+              </span>
+              <span className="sm:hidden text-xs font-bold text-primary">
+                {total.toLocaleString()} recepciones
+              </span>
             </div>
 
-            <select
-              value={modelo}
-              onChange={(e) => {
-                setModelo(e.target.value);
-                setPage(1);
-              }}
-              className="px-3 py-1.5 rounded-xl border border-outline-variant bg-background text-xs font-medium focus:outline-none focus:border-primary"
-            >
-              <option value="">Todos los Modelos</option>
-              {MODELOS_POS_SUGERIDOS.map((m) => (
-                <option key={m} value={m}>
-                  {m}
-                </option>
-              ))}
-            </select>
+            <div className="grid grid-cols-2 sm:contents gap-2">
+              <select
+                value={modelo}
+                onChange={(e) => {
+                  setModelo(e.target.value);
+                  setPage(1);
+                }}
+                className="w-full sm:w-auto px-3 py-2 sm:py-1.5 rounded-xl border border-outline-variant bg-background text-xs font-medium focus:outline-none focus:border-primary"
+              >
+                <option value="">Todos los Modelos</option>
+                {MODELOS_POS_SUGERIDOS.map((m) => (
+                  <option key={m} value={m}>
+                    {m}
+                  </option>
+                ))}
+              </select>
 
-            <select
-              value={estatus}
-              onChange={(e) => {
-                setEstatus(e.target.value);
-                setPage(1);
-              }}
-              className="px-3 py-1.5 rounded-xl border border-outline-variant bg-background text-xs font-medium focus:outline-none focus:border-primary"
-            >
-              <option value="">Todos los Estatus</option>
-              {ESTATUS_RECEPCION_OPTIONS.map((o) => (
-                <option key={o} value={o}>
-                  {o}
-                </option>
-              ))}
-            </select>
+              <select
+                value={estatus}
+                onChange={(e) => {
+                  setEstatus(e.target.value);
+                  setPage(1);
+                }}
+                className="w-full sm:w-auto px-3 py-2 sm:py-1.5 rounded-xl border border-outline-variant bg-background text-xs font-medium focus:outline-none focus:border-primary"
+              >
+                <option value="">Todos los Estatus</option>
+                {ESTATUS_RECEPCION_OPTIONS.map((o) => (
+                  <option key={o} value={o}>
+                    {o}
+                  </option>
+                ))}
+              </select>
+            </div>
 
             {(search || modelo || estatus) && (
               <button
@@ -192,21 +199,101 @@ export default function RecepcionDespachoPage() {
                   setEstatus("");
                   setPage(1);
                 }}
-                className="px-3 py-1.5 rounded-xl text-xs font-bold text-primary hover:bg-secondary-container cursor-pointer"
+                className="px-3 py-1.5 rounded-xl text-xs font-bold text-primary hover:bg-secondary-container cursor-pointer text-left sm:text-center"
               >
                 Limpiar filtros
               </button>
             )}
 
-            <span className="ml-auto text-xs font-bold text-on-surface-variant">
+            <span className="hidden sm:inline ml-auto text-xs font-bold text-on-surface-variant">
               {total.toLocaleString()} recepciones
             </span>
           </div>
         </section>
 
-        {/* Table */}
+        {/* Mobile Cards (< md) + Desktop Table (>= md) */}
         <section className="bg-white border border-outline-variant rounded-2xl shadow-sm overflow-hidden">
-          <div className="overflow-x-auto custom-scrollbar">
+          {/* Mobile Cards View */}
+          <div className="md:hidden divide-y divide-outline-variant/60">
+            {loading ? (
+              <div className="py-12 px-4 text-center text-xs text-on-surface-variant">
+                Cargando recepciones desde Neon...
+              </div>
+            ) : records.length === 0 ? (
+              <div className="py-12 px-4 text-center text-xs text-on-surface-variant">
+                No se encontraron recepciones con los filtros actuales.
+              </div>
+            ) : (
+              records.map((r) => (
+                <div
+                  key={r.id}
+                  onClick={() => setSelected(r)}
+                  className="p-3.5 hover:bg-secondary-container/25 active:bg-secondary-container/40 transition-colors cursor-pointer space-y-2.5"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span className="font-mono font-black text-xs text-primary">
+                          {r.serial || "SIN SERIAL"}
+                        </span>
+                        {r.modelo && (
+                          <span className="px-2 py-0.5 rounded-full bg-secondary-container text-primary font-bold text-[10px]">
+                            {r.modelo}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs font-extrabold text-on-surface mt-1 line-clamp-1">
+                        {r.razon_social || "Sin razón social"}
+                      </p>
+                    </div>
+                    <span
+                      className={cn(
+                        "inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold border shrink-0",
+                        getStatusBadgeClass(r.estatus)
+                      )}
+                    >
+                      {r.estatus || "ENTREGADO A ST"}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between text-[11px] text-on-surface-variant">
+                    <span>
+                      Guía: <strong className="font-mono text-primary">{r.numero_guia || "—"}</strong> • Cant:{" "}
+                      <strong>{r.cantidad_equipos || 1}</strong>
+                    </span>
+                    <span>{formatDate(r.fecha_recepcion)}</span>
+                  </div>
+
+                  <div className="grid grid-cols-6 gap-1 pt-0.5">
+                    {(
+                      [
+                        ["caja", "Caja"],
+                        ["cargador", "Carg"],
+                        ["bateria", "Bat"],
+                        ["simcard", "SIM"],
+                        ["rollo", "Rollo"],
+                        ["forro", "Forro"],
+                      ] as const
+                    ).map(([k, label]) => (
+                      <div
+                        key={k}
+                        className={cn(
+                          "py-1 px-1 rounded-lg border text-center text-[9px] font-black",
+                          r[k] === "SI"
+                            ? "bg-emerald-50 text-emerald-800 border-emerald-200"
+                            : "bg-stone-100 text-stone-400 border-stone-200"
+                        )}
+                      >
+                        {label}: {r[k] || "NO"}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
+          <div className="hidden md:block overflow-x-auto custom-scrollbar">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-secondary-container/60 border-b border-outline-variant text-[11px] font-black uppercase tracking-wider text-primary">
@@ -397,14 +484,14 @@ function ReceptionModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-3xl shadow-2xl border border-outline-variant w-full max-w-2xl overflow-hidden">
-        <div className="bg-gradient-to-r from-primary to-primary-container text-white px-6 py-4 flex items-center justify-between">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm p-0 sm:p-4">
+      <div className="bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl border border-outline-variant w-full max-w-2xl max-h-[94dvh] sm:max-h-[90vh] flex flex-col overflow-hidden">
+        <div className="bg-gradient-to-r from-primary to-primary-container text-white px-4 sm:px-6 py-3.5 sm:py-4 flex items-center justify-between">
           <div>
             <p className="text-[10px] font-black uppercase tracking-widest text-white/80">
               Recepción en Despacho
             </p>
-            <h2 className="text-lg font-black">
+            <h2 className="text-base sm:text-lg font-black">
               {record ? `Editar Recepción #${record.id}` : "Registrar Recepción de Equipo"}
             </h2>
           </div>
@@ -416,7 +503,7 @@ function ReceptionModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[82vh] overflow-y-auto">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 overflow-y-auto custom-scrollbar flex-1">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label className="block text-[11px] font-bold uppercase text-on-surface-variant mb-1">

@@ -58,11 +58,11 @@ export function Sidebar() {
 
       <div
         className={cn(
-          "fixed left-0 top-0 h-screen z-50 transition-all duration-300 ease-in-out flex w-72 lg:w-80",
+          "fixed left-0 top-0 h-[100dvh] z-50 transition-all duration-300 ease-in-out flex w-[82vw] max-w-72 lg:max-w-none lg:w-80",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
-        <aside className="w-full h-full bg-white border-r border-outline-variant flex flex-col p-6 overflow-y-auto custom-scrollbar relative shadow-2xl shadow-primary/5">
+        <aside className="w-full h-full bg-white border-r border-outline-variant flex flex-col p-5 sm:p-6 overflow-y-auto custom-scrollbar relative shadow-2xl shadow-primary/5">
           {/* Logo Section - Verde Esmeralda */}
           <div className="flex items-center justify-between mb-7 px-1">
             <div className="flex items-center gap-3">

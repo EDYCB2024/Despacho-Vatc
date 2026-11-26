@@ -133,12 +133,12 @@ export function DispatchDetailModal({
   const dateVal = (v: string | null | undefined) => (v ? String(v).slice(0, 10) : "");
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-3 sm:p-6">
-      <div className="bg-white rounded-3xl shadow-2xl border border-outline-variant w-full max-w-4xl max-h-[92vh] flex flex-col overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm p-0 sm:p-6">
+      <div className="bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl border border-outline-variant w-full max-w-4xl max-h-[94dvh] sm:max-h-[92vh] flex flex-col overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-r from-primary to-primary-container text-white px-6 py-4 flex items-center justify-between gap-4">
+        <div className="bg-gradient-to-r from-primary to-primary-container text-white px-4 sm:px-6 py-3.5 sm:py-4 flex items-center justify-between gap-3">
           <div className="min-w-0">
-            <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
               <span className="text-[10px] font-black uppercase tracking-widest bg-white/20 px-2.5 py-0.5 rounded-full">
                 Despacho #{dispatchId}
               </span>
@@ -153,7 +153,7 @@ export function DispatchDetailModal({
                 </span>
               )}
             </div>
-            <h2 className="text-lg sm:text-xl font-black tracking-tight mt-1 truncate">
+            <h2 className="text-base sm:text-xl font-black tracking-tight mt-1 truncate">
               {form.destinatario || form.razon_social || "Sin destinatario"}
             </h2>
           </div>
@@ -167,30 +167,30 @@ export function DispatchDetailModal({
         </div>
 
         {/* Tabs */}
-        <div className="flex items-center justify-between px-6 pt-3 pb-2 bg-surface-container border-b border-outline-variant">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-2 px-4 sm:px-6 pt-2.5 pb-2 bg-surface-container border-b border-outline-variant">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <button
               onClick={() => setActiveTab("ficha")}
               className={cn(
-                "flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer",
+                "flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer",
                 activeTab === "ficha"
                   ? "bg-primary text-white shadow-md shadow-primary/20"
                   : "text-on-surface-variant hover:bg-white hover:text-primary"
               )}
             >
-              <Truck className="w-3.5 h-3.5" />
-              <span>Expediente de Despacho</span>
+              <Truck className="w-3.5 h-3.5 shrink-0" />
+              <span>Expediente</span>
             </button>
             <button
               onClick={() => setActiveTab("historial")}
               className={cn(
-                "flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer",
+                "flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer",
                 activeTab === "historial"
                   ? "bg-primary text-white shadow-md shadow-primary/20"
                   : "text-on-surface-variant hover:bg-white hover:text-primary"
               )}
             >
-              <History className="w-3.5 h-3.5" />
+              <History className="w-3.5 h-3.5 shrink-0" />
               <span>Historial ({logs.length})</span>
             </button>
           </div>
@@ -200,16 +200,16 @@ export function DispatchDetailModal({
               href={waUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition-colors"
             >
-              <MessageCircle className="w-3.5 h-3.5" />
-              <span>Notificar Guía por WhatsApp</span>
+              <MessageCircle className="w-3.5 h-3.5 shrink-0" />
+              <span>WhatsApp</span>
             </a>
           )}
         </div>
 
         {/* Body */}
-        <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 custom-scrollbar">
           {loading ? (
             <div className="py-16 text-center text-sm text-on-surface-variant">
               Cargando expediente desde Neon...
@@ -449,21 +449,21 @@ export function DispatchDetailModal({
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 bg-surface-container border-t border-outline-variant flex items-center justify-between gap-3">
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 bg-surface-container border-t border-outline-variant flex flex-wrap items-center justify-between gap-2">
           <button
             type="button"
             onClick={handleDelete}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-rose-700 hover:bg-rose-50 border border-transparent hover:border-rose-200 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-rose-700 hover:bg-rose-50 border border-transparent hover:border-rose-200 transition-colors cursor-pointer"
           >
             <Trash2 className="w-4 h-4" />
             <span>Eliminar</span>
           </button>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 ml-auto">
             {savedNotice && (
               <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700">
                 <CheckCircle2 className="w-4 h-4" />
-                Guardado en Neon
+                <span className="hidden sm:inline">Guardado en Neon</span>
               </span>
             )}
             <span
@@ -477,7 +477,7 @@ export function DispatchDetailModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl border border-outline-variant bg-white text-xs font-bold text-on-surface-variant hover:bg-background cursor-pointer"
+              className="px-3.5 sm:px-4 py-2 rounded-xl border border-outline-variant bg-white text-xs font-bold text-on-surface-variant hover:bg-background cursor-pointer"
             >
               Cerrar
             </button>
@@ -485,10 +485,10 @@ export function DispatchDetailModal({
               type="button"
               onClick={handleSave}
               disabled={saving}
-              className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-primary hover:bg-primary-container text-white text-xs font-bold shadow-md shadow-primary/20 cursor-pointer disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-2 rounded-xl bg-primary hover:bg-primary-container text-white text-xs font-bold shadow-md shadow-primary/20 cursor-pointer disabled:opacity-50"
             >
               <Save className="w-4 h-4" />
-              <span>{saving ? "Guardando..." : "Guardar Cambios"}</span>
+              <span>{saving ? "Guardando..." : "Guardar"}</span>
             </button>
           </div>
         </div>

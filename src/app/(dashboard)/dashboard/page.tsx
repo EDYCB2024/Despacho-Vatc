@@ -132,17 +132,19 @@ export default function DashboardPage() {
         user={user}
       />
 
-      <main className="p-4 sm:p-6 space-y-6 max-w-[1600px] mx-auto w-full">
-        <div className="flex items-center justify-between">
+      <main className="p-3 sm:p-6 space-y-5 sm:space-y-6 max-w-[1600px] mx-auto w-full">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h2 className="text-lg font-black text-on-surface">Resumen Ejecutivo de Despacho</h2>
+            <h2 className="text-base sm:text-lg font-black text-on-surface">
+              Resumen Ejecutivo de Despacho
+            </h2>
             <p className="text-xs text-on-surface-variant">
               Consolidado de SIMCARD/ST, Despacho de Kits, Equipos Nuevos, Recepción y Parque POS BDDIC25
             </p>
           </div>
           <button
             onClick={loadStats}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-outline-variant bg-white hover:bg-secondary-container text-primary text-xs font-bold cursor-pointer"
+            className="self-start sm:self-auto inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-outline-variant bg-white hover:bg-secondary-container text-primary text-xs font-bold cursor-pointer shrink-0"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
             <span>Actualizar</span>
@@ -156,21 +158,21 @@ export default function DashboardPage() {
         ) : (
           <>
             {/* KPI Grid */}
-            <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <section className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               {kpis.map((k) => (
                 <div
                   key={k.label}
-                  className="bg-white border border-outline-variant rounded-2xl p-5 shadow-sm flex items-center justify-between gap-3"
+                  className="bg-white border border-outline-variant rounded-2xl p-4 sm:p-5 shadow-sm flex items-center justify-between gap-3"
                 >
-                  <div>
-                    <p className="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">
+                  <div className="min-w-0">
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant truncate">
                       {k.label}
                     </p>
-                    <p className="text-2xl font-black text-on-surface mt-1">{k.value}</p>
-                    <p className="text-[11px] text-outline mt-0.5">{k.sub}</p>
+                    <p className="text-xl sm:text-2xl font-black text-on-surface mt-1">{k.value}</p>
+                    <p className="text-[11px] text-outline mt-0.5 truncate">{k.sub}</p>
                   </div>
                   <div
-                    className={`w-11 h-11 rounded-2xl flex items-center justify-center shadow-md shrink-0 ${k.accent}`}
+                    className={`w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center shadow-md shrink-0 ${k.accent}`}
                   >
                     <k.icon className="w-5 h-5" />
                   </div>
@@ -179,16 +181,16 @@ export default function DashboardPage() {
             </section>
 
             {/* Charts Row 1 */}
-            <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               <ChartCard title="Top Ciudades Destino en Despachos ZOOM">
-                <ResponsiveContainer width="100%" height={300}>
+                <ResponsiveContainer width="100%" height={280}>
                   <BarChart
                     data={stats.byCiudadDestino}
                     layout="vertical"
-                    margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
+                    margin={{ top: 5, right: 12, left: 4, bottom: 5 }}
                   >
-                    <XAxis type="number" tick={{ fontSize: 11 }} />
-                    <YAxis dataKey="name" type="category" width={130} tick={{ fontSize: 10 }} />
+                    <XAxis type="number" tick={{ fontSize: 10 }} />
+                    <YAxis dataKey="name" type="category" width={95} tick={{ fontSize: 9 }} />
                     <Tooltip />
                     <Bar dataKey="value" radius={[0, 8, 8, 0]}>
                       {stats.byCiudadDestino.map((_, idx) => (
@@ -200,14 +202,14 @@ export default function DashboardPage() {
               </ChartCard>
 
               <ChartCard title="Parque Maestro POS (BDDIC25) por Banco">
-                <ResponsiveContainer width="100%" height={300}>
+                <ResponsiveContainer width="100%" height={280}>
                   <BarChart
                     data={stats.byPosBanco}
                     layout="vertical"
-                    margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
+                    margin={{ top: 5, right: 12, left: 4, bottom: 5 }}
                   >
-                    <XAxis type="number" tick={{ fontSize: 11 }} />
-                    <YAxis dataKey="name" type="category" width={140} tick={{ fontSize: 10 }} />
+                    <XAxis type="number" tick={{ fontSize: 10 }} />
+                    <YAxis dataKey="name" type="category" width={105} tick={{ fontSize: 9 }} />
                     <Tooltip />
                     <Bar dataKey="value" radius={[0, 8, 8, 0]} fill="#059669" />
                   </BarChart>
@@ -216,15 +218,15 @@ export default function DashboardPage() {
             </section>
 
             {/* Charts Row 2 */}
-            <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               <ChartCard title="Equipos Recibidos en Despacho por Modelo">
-                <ResponsiveContainer width="100%" height={260}>
+                <ResponsiveContainer width="100%" height={250}>
                   <BarChart
                     data={stats.byRecepcionModelo}
-                    margin={{ top: 10, right: 10, left: 0, bottom: 20 }}
+                    margin={{ top: 10, right: 10, left: -10, bottom: 20 }}
                   >
-                    <XAxis dataKey="name" tick={{ fontSize: 10 }} angle={-15} textAnchor="end" />
-                    <YAxis tick={{ fontSize: 11 }} />
+                    <XAxis dataKey="name" tick={{ fontSize: 9 }} angle={-15} textAnchor="end" />
+                    <YAxis tick={{ fontSize: 10 }} />
                     <Tooltip />
                     <Bar dataKey="value" radius={[8, 8, 0, 0]} fill="#065f46" />
                   </BarChart>
@@ -232,14 +234,14 @@ export default function DashboardPage() {
               </ChartCard>
 
               <ChartCard title="Planes Comerciales Activos en BDDIC25">
-                <ResponsiveContainer width="100%" height={260}>
+                <ResponsiveContainer width="100%" height={250}>
                   <BarChart
                     data={stats.byPosPlan.slice(0, 8)}
                     layout="vertical"
-                    margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
+                    margin={{ top: 5, right: 12, left: 4, bottom: 5 }}
                   >
-                    <XAxis type="number" tick={{ fontSize: 11 }} />
-                    <YAxis dataKey="name" type="category" width={160} tick={{ fontSize: 10 }} />
+                    <XAxis type="number" tick={{ fontSize: 10 }} />
+                    <YAxis dataKey="name" type="category" width={115} tick={{ fontSize: 9 }} />
                     <Tooltip />
                     <Bar dataKey="value" radius={[0, 8, 8, 0]} fill="#0d9488" />
                   </BarChart>

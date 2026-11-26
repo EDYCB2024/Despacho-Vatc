@@ -115,14 +115,14 @@ export function NewDispatchModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-3xl shadow-2xl border border-outline-variant w-full max-w-2xl overflow-hidden">
-        <div className="bg-gradient-to-r from-primary to-primary-container text-white px-6 py-4 flex items-center justify-between">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm p-0 sm:p-4">
+      <div className="bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl border border-outline-variant w-full max-w-2xl max-h-[94dvh] sm:max-h-[90vh] flex flex-col overflow-hidden">
+        <div className="bg-gradient-to-r from-primary to-primary-container text-white px-4 sm:px-6 py-3.5 sm:py-4 flex items-center justify-between">
           <div>
             <p className="text-[10px] font-black uppercase tracking-widest text-white/80">
               Logística ZOOM • Despacho VATC
             </p>
-            <h2 className="text-lg font-black">Registrar Nuevo Despacho</h2>
+            <h2 className="text-base sm:text-lg font-black">Registrar Nuevo Despacho</h2>
           </div>
           <button
             onClick={onClose}
@@ -132,7 +132,7 @@ export function NewDispatchModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[80vh] overflow-y-auto custom-scrollbar">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 overflow-y-auto custom-scrollbar flex-1">
           {error && (
             <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold">
               {error}

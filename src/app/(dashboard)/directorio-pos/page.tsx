@@ -96,23 +96,23 @@ export default function DirectorioPosPage() {
         user={user}
       />
 
-      <main className="p-4 sm:p-6 space-y-5 max-w-[1600px] mx-auto w-full">
-        <section className="bg-white border border-outline-variant rounded-2xl p-4 shadow-sm space-y-3">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="relative flex-1 min-w-[260px] max-w-lg">
+      <main className="p-3 sm:p-6 space-y-4 sm:space-y-5 max-w-[1600px] mx-auto w-full">
+        <section className="bg-white border border-outline-variant rounded-2xl p-3.5 sm:p-4 shadow-sm space-y-3">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center justify-between gap-2.5 sm:gap-3">
+            <div className="relative flex-1 w-full sm:min-w-[260px] sm:max-w-lg">
               <Search className="w-4 h-4 text-outline absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Buscar en los 29,986 POS por Serial, RIF, Razón Social, Banco o Plan..."
+                placeholder="Buscar en los 29,986 POS por Serial, RIF, Comercio, Banco o Plan..."
                 className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-outline-variant bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
               />
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 w-full sm:w-auto">
               <button
                 onClick={fetchDirectory}
-                className="p-2.5 rounded-xl border border-outline-variant bg-white hover:bg-secondary-container text-primary transition-colors cursor-pointer"
+                className="p-2.5 rounded-xl border border-outline-variant bg-white hover:bg-secondary-container text-primary transition-colors cursor-pointer shrink-0"
                 title="Recargar"
               >
                 <RefreshCw className={cn("w-4 h-4", loading && "animate-spin")} />
@@ -121,18 +121,24 @@ export default function DirectorioPosPage() {
               <button
                 onClick={handleExportExcel}
                 disabled={exporting}
-                className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl border border-outline-variant bg-white hover:bg-secondary-container text-primary text-xs font-bold transition-colors cursor-pointer disabled:opacity-50"
+                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl border border-outline-variant bg-white hover:bg-secondary-container text-primary text-xs font-bold transition-colors cursor-pointer disabled:opacity-50"
               >
-                <Download className="w-4 h-4" />
+                <Download className="w-4 h-4 shrink-0" />
                 <span>{exporting ? "Exportando..." : "Exportar Excel (5,000)"}</span>
               </button>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-outline-variant/60">
-            <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-on-surface-variant mr-1">
-              <Filter className="w-3.5 h-3.5 text-primary" />
-              <span>Filtros:</span>
+          <div className="grid grid-cols-1 sm:flex sm:flex-wrap items-center gap-2 pt-2.5 border-t border-outline-variant/60">
+            <div className="flex items-center justify-between sm:justify-start gap-1.5 text-[11px] font-bold uppercase tracking-wider text-on-surface-variant sm:mr-1">
+              <span className="inline-flex items-center gap-1.5">
+                <Filter className="w-3.5 h-3.5 text-primary" />
+                <span>Filtros:</span>
+              </span>
+              <span className="sm:hidden inline-flex items-center gap-1 text-xs font-bold text-primary">
+                <Database className="w-3.5 h-3.5" />
+                {total.toLocaleString()} POS
+              </span>
             </div>
 
             <select
@@ -141,7 +147,7 @@ export default function DirectorioPosPage() {
                 setBanco(e.target.value);
                 setPage(1);
               }}
-              className="px-3 py-1.5 rounded-xl border border-outline-variant bg-background text-xs font-medium focus:outline-none focus:border-primary"
+              className="w-full sm:w-auto px-3 py-2 sm:py-1.5 rounded-xl border border-outline-variant bg-background text-xs font-medium focus:outline-none focus:border-primary"
             >
               <option value="">Todos los Bancos</option>
               {BANCOS_DIRECTORIO.map((b) => (
@@ -151,35 +157,37 @@ export default function DirectorioPosPage() {
               ))}
             </select>
 
-            <select
-              value={procesadora}
-              onChange={(e) => {
-                setProcesadora(e.target.value);
-                setPage(1);
-              }}
-              className="px-3 py-1.5 rounded-xl border border-outline-variant bg-background text-xs font-medium focus:outline-none focus:border-primary"
-            >
-              <option value="">Todas las Procesadoras</option>
-              <option value="CREDICARD">CREDICARD</option>
-              <option value="PLATCO">PLATCO</option>
-            </select>
+            <div className="grid grid-cols-2 sm:contents gap-2">
+              <select
+                value={procesadora}
+                onChange={(e) => {
+                  setProcesadora(e.target.value);
+                  setPage(1);
+                }}
+                className="w-full sm:w-auto px-3 py-2 sm:py-1.5 rounded-xl border border-outline-variant bg-background text-xs font-medium focus:outline-none focus:border-primary"
+              >
+                <option value="">Procesadoras (Todas)</option>
+                <option value="CREDICARD">CREDICARD</option>
+                <option value="PLATCO">PLATCO</option>
+              </select>
 
-            <select
-              value={estatus}
-              onChange={(e) => {
-                setEstatus(e.target.value);
-                setPage(1);
-              }}
-              className="px-3 py-1.5 rounded-xl border border-outline-variant bg-background text-xs font-medium focus:outline-none focus:border-primary"
-            >
-              <option value="">Todos los Estatus</option>
-              <option value="Activo">Activo</option>
-              <option value="Inactivo">Inactivo</option>
-              <option value="Nuevo">Nuevo</option>
-              <option value="Servicio Técnico">Servicio Técnico</option>
-              <option value="Acuerdo de Pago">Acuerdo de Pago</option>
-              <option value="Convenio">Convenio</option>
-            </select>
+              <select
+                value={estatus}
+                onChange={(e) => {
+                  setEstatus(e.target.value);
+                  setPage(1);
+                }}
+                className="w-full sm:w-auto px-3 py-2 sm:py-1.5 rounded-xl border border-outline-variant bg-background text-xs font-medium focus:outline-none focus:border-primary"
+              >
+                <option value="">Estatus (Todos)</option>
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+                <option value="Nuevo">Nuevo</option>
+                <option value="Servicio Técnico">Servicio Técnico</option>
+                <option value="Acuerdo de Pago">Acuerdo de Pago</option>
+                <option value="Convenio">Convenio</option>
+              </select>
+            </div>
 
             {(search || banco || procesadora || estatus) && (
               <button
@@ -190,13 +198,13 @@ export default function DirectorioPosPage() {
                   setEstatus("");
                   setPage(1);
                 }}
-                className="px-3 py-1.5 rounded-xl text-xs font-bold text-primary hover:bg-secondary-container cursor-pointer"
+                className="px-3 py-1.5 rounded-xl text-xs font-bold text-primary hover:bg-secondary-container cursor-pointer text-left sm:text-center"
               >
                 Limpiar filtros
               </button>
             )}
 
-            <span className="ml-auto inline-flex items-center gap-1.5 text-xs font-bold text-primary">
+            <span className="hidden sm:inline-flex ml-auto items-center gap-1.5 text-xs font-bold text-primary">
               <Database className="w-3.5 h-3.5" />
               {total.toLocaleString()} terminales POS
             </span>
@@ -204,7 +212,75 @@ export default function DirectorioPosPage() {
         </section>
 
         <section className="bg-white border border-outline-variant rounded-2xl shadow-sm overflow-hidden">
-          <div className="overflow-x-auto custom-scrollbar">
+          {/* Mobile Cards View */}
+          <div className="md:hidden divide-y divide-outline-variant/60">
+            {loading ? (
+              <div className="py-12 px-4 text-center text-xs text-on-surface-variant">
+                Consultando directorio BDDIC25 en Neon PostgreSQL...
+              </div>
+            ) : records.length === 0 ? (
+              <div className="py-12 px-4 text-center text-xs text-on-surface-variant">
+                No se encontraron terminales con los filtros actuales.
+              </div>
+            ) : (
+              records.map((r) => (
+                <div key={r.id} className="p-3.5 space-y-2">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span className="font-mono font-black text-xs text-primary">
+                          {r.serial}
+                        </span>
+                        {r.procesadora && (
+                          <span className="px-2 py-0.5 rounded-full bg-surface-container text-primary font-bold text-[10px]">
+                            {r.procesadora}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs font-extrabold text-on-surface mt-1 line-clamp-1">
+                        {r.razon_social || "—"}
+                      </p>
+                    </div>
+                    <span
+                      className={cn(
+                        "inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold border shrink-0",
+                        getStatusBadgeClass(r.estatus)
+                      )}
+                    >
+                      {r.estatus || "—"}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 text-[11px] bg-surface-container/40 rounded-xl p-2 border border-outline-variant/40">
+                    <div className="min-w-0">
+                      <span className="text-[10px] font-bold uppercase text-outline block">
+                        RIF / Banco
+                      </span>
+                      <span className="font-mono font-semibold text-on-surface block truncate">
+                        {r.rif_cliente || "—"}
+                      </span>
+                      <span className="text-[10px] font-bold text-primary block truncate">
+                        {r.banco || "—"}
+                      </span>
+                    </div>
+                    <div className="min-w-0">
+                      <span className="text-[10px] font-bold uppercase text-outline block">
+                        Plan / Fecha
+                      </span>
+                      <span className="font-semibold text-on-surface block truncate">
+                        {r.plan || "—"}
+                      </span>
+                      <span className="text-[10px] text-outline block">
+                        {formatDate(r.fecha)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
+          <div className="hidden md:block overflow-x-auto custom-scrollbar">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-secondary-container/60 border-b border-outline-variant text-[11px] font-black uppercase tracking-wider text-primary">
